@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LIKA VERA | Midnight Universe & Diary</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&family=Cormorant+Garamond:ital,wght@0,500;0,700;1,500&family=Kanit:wght@200;300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-midnight: #08090D;
+      --bg-card: #11131A;
+      --accent-gold: #D4A359;
+      --accent-teal: #1D4E56;
+      --text-cream: #EAE6DF;
+      --text-muted: #8E929F;
+      --border-subtle: rgba(212, 163, 89, 0.22);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: var(--bg-midnight);
+      color: var(--text-cream);
+      font-family: 'Kanit', sans-serif;
+      font-weight: 300;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ฟิล์มเกรนจางๆ ให้ฟีลหนังยุคเก่า */
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background-image: radial-gradient(rgba(255,255,255,0.03) 1px, transparent 0);
+      background-size: 24px 24px;
+      pointer-events: none;
+      z-index: 999;
+    }
+
+    /* Navbar ด้านบนสไตล์โปสเตอร์หนัง */
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      padding: 18px 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: linear-gradient(to bottom, rgba(8,9,13,0.9), transparent);
+      z-index: 100;
+      font-size: 0.75rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .nav-logo {
+      font-family: 'Cinzel', serif;
+      font-weight: 800;
+      color: var(--accent-gold);
+      font-size: 0.95rem;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 18px;
+    }
+
+    .nav-links a {
+      color: var(--text-cream);
+      text-decoration: none;
+      opacity: 0.75;
+      transition: opacity 0.2s, color 0.2s;
+    }
+
+    .nav-links a:hover {
+      opacity: 1;
+      color: var(--accent-gold);
+    }
+
+    /* Hero Section แบบโปสเตอร์ภาพยนตร์ */
+    .hero {
+      position: relative;
+      min-height: 92vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 40px 24px 60px;
+      background: 
+        linear-gradient(to top, var(--bg-midnight) 8%, rgba(8,9,13,0.45) 55%, rgba(13, 35, 41, 0.65) 100%),
+        url('https://i.ibb.co/FTmQYmR/unnamed3.jpg') center/cover no-repeat;
+    }
+
+    .hero-tag {
+      font-size: 0.72rem;
+      letter-spacing: 3px;
+      color: var(--accent-gold);
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .hero-title {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(2.6rem, 8vw, 4.8rem);
+      font-weight: 800;
+      line-height: 0.95;
+      letter-spacing: 2px;
+      color: #F3C669;
+      text-shadow: 0 10px 30px rgba(0,0,0,0.8);
+      margin-bottom: 12px;
+    }
+
+    .hero-subtitle {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 1.35rem;
+      color: var(--text-cream);
+      margin-bottom: 24px;
+      opacity: 0.9;
+    }
+
+    .hero-quote-box {
+      max-width: 520px;
+      border-left: 2px solid var(--accent-gold);
+      padding-left: 16px;
+      font-size: 0.9rem;
+      color: #C7C3BC;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+
+    /* Section Header สไตล์ Brand Board */
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      border-bottom: 1px solid var(--border-subtle);
+      padding-bottom: 10px;
+      margin-bottom: 28px;
+    }
+
+    .section-head h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem;
+      font-weight: 500;
+      font-style: italic;
+      color: var(--accent-gold);
+    }
+
+    .section-head span {
+      font-size: 0.72rem;
+      letter-spacing: 2px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    /* ช่องบันทึกความรู้สึกลึกๆ (Interactive Secret Note) */
+    .diary-note-card {
+      background: linear-gradient(145deg, #12151E, #0C0E14);
+      border: 1px solid var(--border-subtle);
+      border-radius: 16px;
+      padding: 26px 24px;
+      margin: 35px 0;
+      position: relative;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+    }
+
+    .diary-label {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.75rem;
+      letter-spacing: 1.5px;
+      color: var(--accent-gold);
+      margin-bottom: 12px;
+      text-transform: uppercase;
+    }
+
+    .diary-textarea {
+      width: 100%;
+      background: transparent;
+      border: none;
+      color: var(--text-cream);
+      font-family: 'Kanit', sans-serif;
+      font-size: 0.98rem;
+      font-weight: 300;
+      line-height: 1.75;
+      resize: none;
+      outline: none;
+    }
+
+    .diary-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 14px;
+      padding-top: 12px;
+      border-top: 1px dashed rgba(255,255,255,0.1);
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .btn-ghost {
+      background: rgba(212, 163, 89, 0.12);
+      color: var(--accent-gold);
+      border: 1px solid var(--border-subtle);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-ghost:hover {
+      background: var(--accent-gold);
+      color: #08090D;
+    }
+
+    /* Grid รูปภาพสไตล์ Moodboard */
+    .mood-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+      gap: 16px;
+    }
+
+    .photo-frame {
+      position: relative;
+      border-radius: 12px;
+      overflow: hidden;
+      background: var(--bg-card);
+      border: 1px solid rgba(255,255,255,0.06);
+      aspect-ratio: 3 / 4;
+      group: hover;
+    }
+
+    .photo-frame.wide {
+      aspect-ratio: 16 / 10;
+    }
+
+    .photo-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: contrast(1.04) brightness(0.92);
+      transition: transform 0.6s ease, filter 0.4s ease;
+    }
+
+    .photo-frame:hover img {
+      transform: scale(1.05);
+      filter: contrast(1.08) brightness(1);
+    }
+
+    .photo-caption {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 24px 14px 12px;
+      background: linear-gradient(to top, rgba(0,0,0,0.85), transparent);
+      font-size: 0.78rem;
+      color: #E5E7EB;
+      letter-spacing: 0.5px;
+    }
+
+    /* ส่วนศิลปินคนโปรด (Amy & Lana) */
+    .muse-split {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+
+    @media (min-width: 700px) {
+      .muse-split { grid-template-columns: 1.4fr 1fr; }
+    }
+
+    .muse-box {
+      background: var(--bg-card);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 18px;
+      padding: 20px;
+    }
+
+    .muse-title {
+      font-family: 'Cinzel', serif;
+      font-size: 1.25rem;
+      color: var(--accent-gold);
+      margin-bottom: 4px;
+    }
+
+    .muse-sub {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-bottom: 14px;
+    }
+
+    .mini-collage {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+
+    .mini-collage img {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+
+    /* Fav Albums (1-5) */
+    .album-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(165px, 1fr));
+      gap: 18px;
+    }
+
+    .album-card {
+      background: var(--bg-card);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 14px;
+      padding: 12px;
+      text-align: center;
+      cursor: pointer;
+      transition: transform 0.25s, border-color 0.25s;
+    }
+
+    .album-card:hover {
+      transform: translateY(-6px);
+      border-color: var(--accent-gold);
+    }
+
+    .album-cover {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+      border-radius: 10px;
+      margin-bottom: 10px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.6);
+    }
+
+    .album-rank {
+      font-size: 0.68rem;
+      color: var(--accent-gold);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
+    .album-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--text-cream);
+      margin-top: 2px;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 50px 20px 30px;
+      border-top: 1px solid var(--border-subtle);
+      color: var(--text-muted);
+      font-size: 0.78rem;
+    }
+
+    footer .sig {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 1.5rem;
+      color: var(--accent-gold);
+      margin-bottom: 6px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav>
+    <div class="nav-logo">LIKA VERA</div>
+    <div class="nav-links">
+      <a href="#diary">Diary</a>
+      <a href="#muse">Muse</a>
+      <a href="#style">60s Style</a>
+      <a href="#albums">Albums</a>
+    </div>
+  </nav>
+
+  <!-- Hero Section แบบโปสเตอร์หนังยามค่ำคืน -->
+  <header class="hero">
+    <div class="hero-tag">Midnight Archive • Personal Universe</div>
+    <h1 class="hero-title">LIKA VERA</h1>
+    <div class="hero-subtitle">also known as Chalika — lost in the 60s & midnight melodies.</div>
+    <div class="hero-quote-box">
+      "การเป็นตัวของตัวเองในโลกที่ไม่มีใครเข้าใจ อาจทำให้รู้สึกโดดเดี่ยวในบางคืน... แต่มันคือความจริงเพียงหนึ่งเดียวที่ทำให้ฉันยังคงเป็นฉัน"
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- ช่องบันทึกความรู้สึกลึกๆ (พิมพ์แก้ได้จริงและมีปุ่มสุ่มประโยค) -->
+    <section id="diary" class="diary-note-card">
+      <div class="diary-label">
+        <span>🕯️ Midnight Thoughts • พื้นที่ความรู้สึกส่วนตัว</span>
+        <span id="save-status">บันทึกอัตโนมัติ</span>
+      </div>
+      <textarea id="personal-diary" class="diary-textarea" rows="3" placeholder="เขียนความรู้สึกสั้นๆ ของคุณตรงนี้ได้เลย...">บางครั้งการเงียบและปล่อยให้เพลงเก่าๆ เล่นวนไปในความมืด ก็เป็นการปลอบประโลมที่ดีกว่าคำพูดของใครหลายคน...</textarea>
+      <div class="diary-actions">
+        <span>*คลิกที่ข้อความด้านบนเพื่อพิมพ์ความรู้สึกใหม่ได้ตลอดเวลา</span>
+        <button class="btn-ghost" onclick="randomMidnightQuote()">✨ สุ่มประโยคความรู้สึก</button>
+      </div>
+    </section>
+
+    <!-- หมวด 1: Night & Aesthetic -->
+    <section style="margin-bottom: 50px;">
+      <div class="section-head">
+        <h2>The Midnight Aesthetic</h2>
+        <span>Night & Solitude</span>
+      </div>
+      <div class="mood-grid">
+        <div class="photo-frame">
+          <img src="https://i.ibb.co/JWxKWKmj/unnamed5.jpg" alt="Night Mood">
+          <div class="photo-caption">02:00 AM — ความเงียบที่เข้าใจเราที่สุด</div>
+        </div>
+        <div class="photo-frame">
+          <img src="https://i.ibb.co/m5rct3bz/unnamed6.jpg" alt="Aesthetic 1">
+          <div class="photo-caption">Melancholy & Shadows</div>
+        </div>
+        <div class="photo-frame">
+          <img src="https://i.ibb.co/jkDWqSPb/unnamed7.jpg" alt="Aesthetic 2">
+          <div class="photo-caption">Vintage Soul</div>
+        </div>
+        <div class="photo-frame">
+          <img src="https://i.ibb.co/9HHFTW7w/unnamed8.jpg" alt="Aesthetic 3">
+          <div class="photo-caption">Unspoken Words</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- หมวด 2: ศิลปินที่รัก (Amy Winehouse & Lana Del Rey) -->
+    <section id="muse" style="margin-bottom: 50px;">
+      <div class="section-head">
+        <h2>Voices That Understand Me</h2>
+        <span>Favorite Singers</span>
+      </div>
+      <div class="muse-split">
+        <!-- Amy Winehouse -->
+        <div class="muse-box">
+          <div class="muse-title">Amy Winehouse</div>
+          <p class="muse-sub">Jazz, Soul & Raw Emotion — เสียงร้องที่เต็มไปด้วยความเจ็บปวดและจริงใจ</p>
+          <div class="mini-collage">
+            <img src="https://i.ibb.co/d4Rbb7Qy/unnamed10.jpg" alt="Amy 1">
+            <img src="https://i.ibb.co/nNvfPhn4/unnamed11.jpg" alt="Amy 2">
+            <img src="https://i.ibb.co/8gCs6JbZ/unnamed12.jpg" alt="Amy 3">
+            <img src="https://i.ibb.co/k63gxPnQ/image.png" alt="Amy 4">
+            <img src="https://i.ibb.co/Zp7sFbBN/image.png" alt="Amy 5">
+            <img src="https://i.ibb.co/QvYG4gJk/unnamed9.jpg" alt="Aesthetic">
+          </div>
+        </div>
+
+        <!-- Lana Del Rey -->
+        <div class="muse-box" style="display:flex; flex-direction:column; justify-content:space-between;">
+          <div>
+            <div class="muse-title">Lana Del Rey</div>
+            <p class="muse-sub">Cinematic Sadness & Nostalgia — ความเศร้าที่งดงามราวกับฉากในภาพยนตร์</p>
+          </div>
+          <div class="photo-frame" style="aspect-ratio: 4/4;">
+            <img src="https://i.ibb.co/whb44RCJ/unnamed13.jpg" alt="Lana Del Rey">
+            <div class="photo-caption">"Heaven is a place on earth with you."</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ช่องโน้ตสั้นๆ คั่นกลาง -->
+    <div class="diary-note-card" style="padding: 18px 22px; text-align: center;">
+      <p style="font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.25rem; color: var(--accent-gold);">
+        "I don't belong to this decade. My soul lives in the 1960s."
+      </p>
+    </div>
+
+    <!-- หมวด 3: การแต่งตัวสไตล์ 60s -->
+    <section id="style" style="margin-bottom: 50px;">
+      <div class="section-head">
+        <h2>60s Dressing Style & Mood</h2>
+        <span>Retro Fashion</span>
+      </div>
+      <div class="mood-grid">
+        <div class="photo-frame">
+          <img src="https://i.ibb.co/0jZwrcjm/image.png" alt="60s style 1">
+          <div class="photo-caption">Classic Eyeliner & Beehive</div>
+        </div>
+        <div class="photo-frame">
+          <img src="https://i.ibb.co/HLP4LYXS/image.png" alt="60s style 2">
+          <div class="photo-caption">60s Silhouette</div>
+        </div>
+        <div class="photo-frame">
+          <img src="https://i.ibb.co/9Hfm6wh6/image.png" alt="60s style 3">
+          <div class="photo-caption">Timeless Elegance</div>
+        </div>
+        <div class="photo-frame">
+          <img src="https://i.ibb.co/Nd35z69L/image.png" alt="60s style 4">
+          <div class="photo-caption">Noir & Retro</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- หมวด 4: Boy Fav Rockstar & Fav Animal -->
+    <section style="margin-bottom: 50px;">
+      <div class="section-head">
+        <h2>Rockstars & Creatures</h2>
+        <span>Personal Favorites</span>
+      </div>
+      <div class="mood-grid">
+        <div class="photo-frame">
+          <img src="https://i.ibb.co/Nn65gt2K/image.png" alt="Rockstar 1">
+          <div class="photo-caption">🎸 Boy Fav Rockstar</div>
+        </div>
+        <div class="photo-frame">
+          <img src="https://i.ibb.co/4gX3TDJx/image.png" alt="Rockstar 2">
+          <div class="photo-caption">🎸 Rockstar Vibe</div>
+        </div>
+        <div class="photo-frame">
+          <img src="https://i.ibb.co/6cF4hKk7/image.png" alt="Fav Animal 1">
+          <div class="photo-caption">🐾 Favorite Animal</div>
+        </div>
+        <div class="photo-frame">
+          <img src="https://i.ibb.co/8nZ70vtt/image.png" alt="Fav Animal 2">
+          <div class="photo-caption">🐾 Midnight Companion</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- หมวด 5: 5 อัลบั้มโปรดตลอดกาล -->
+    <section id="albums">
+      <div class="section-head">
+        <h2>Fav Albums All The Time</h2>
+        <span>Top 5 Records</span>
+      </div>
+      <div class="album-grid">
+        <div class="album-card">
+          <img src="https://i.ibb.co/JW46nPx1/image.png" alt="Back to Black" class="album-cover">
+          <div class="album-rank">No. 01</div>
+          <div class="album-name">Back to Black</div>
+        </div>
+        <div class="album-card">
+          <img src="https://i.ibb.co/R4Gz6nTw/image.png" alt="Frank" class="album-cover">
+          <div class="album-rank">No. 02</div>
+          <div class="album-name">Frank</div>
+        </div>
+        <div class="album-card">
+          <img src="https://i.ibb.co/VpP4nbKK/image.png" alt="HIM" class="album-cover">
+          <div class="album-rank">No. 03</div>
+          <div class="album-name">HIM</div>
+        </div>
+        <div class="album-card">
+          <img src="https://i.ibb.co/GQjXHrW6/image.png" alt="Hole" class="album-cover">
+          <div class="album-rank">No. 04</div>
+          <div class="album-name">Hole</div>
+        </div>
+        <div class="album-card">
+          <img src="https://i.ibb.co/wNwVRvZN/image.png" alt="Buck-Tick" class="album-cover">
+          <div class="album-rank">No. 05</div>
+          <div class="album-name">Buck-Tick</div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="sig">Lika Vera (Chalika)</div>
+    <p>Created as a safe space for midnight thoughts & timeless music.</p>
+  </footer>
+
+  <script>
+    // ระบบบันทึกข้อความในช่อง Diary ลงเครื่องอัตโนมัติ
+    const diaryInput = document.getElementById("personal-diary");
+    const saveStatus = document.getElementById("save-status");
+
+    // โหลดข้อความเก่าที่เคยพิมพ์ไว้ (ถ้ามี)
+    const savedNote = localStorage.getItem("lika_midnight_note");
+    if (savedNote) {
+      diaryInput.value = savedNote;
+    }
+
+    diaryInput.addEventListener("input", () => {
+      localStorage.setItem("lika_midnight_note", diaryInput.value);
+      saveStatus.innerText = "บันทึกแล้ว ✓";
+      setTimeout(() => { saveStatus.innerText = "บันทึกอัตโนมัติ"; }, 1500);
+    });
+
+    // ประโยคความรู้สึกยามค่ำคืนสำหรับปุ่มสุ่ม
+    const midnightQuotes = [
+      "บางครั้งการเงียบและปล่อยให้เพลงเก่าๆ เล่นวนไปในความมืด ก็เป็นการปลอบประโลมที่ดีกว่าคำพูดของใครหลายคน...",
+      "ไม่เป็นไรเลยถ้าวันนี้จะไม่มีใครเข้าใจเรา แค่เรายังซื่อสัตย์กับความรู้สึกของตัวเองก็พอแล้ว",
+      "ชอบตัวเองตอนกลางคืนที่สุด เพราะเป็นเวลาเดียวที่ไม่ต้องพยายามอธิบายตัวตนให้ใครฟัง",
+      "รสนิยมการฟังเพลงและการแต่งตัวของเรา อาจดูแปลกสำหรับคนอื่น แต่มันคือบ้านที่สบายใจที่สุดของฉัน",
+      "บางความรู้สึกไม่จำเป็นต้องมีคำอธิบาย แค่เปิดเพลงของ Amy หรือ Lana แล้วปล่อยให้คืนนี้ผ่านไปก็พอ"
+    ];
+
+    function randomMidnightQuote() {
+      const randomIndex = Math.floor(Math.random() * midnightQuotes.length);
+      diaryInput.value = midnightQuotes[randomIndex];
+      localStorage.setItem("lika_midnight_note", diaryInput.value);
+    }
+  </script>
+</body>
+</html>
